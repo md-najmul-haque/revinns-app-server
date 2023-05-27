@@ -9,14 +9,15 @@ export const createUser = async (req, res) => {
         console.log(data)
         const { name, email, password, confirmPassword } = data
 
-        const user = await User.findOne({ email: email })
+        const user = await User.findOne({ name: name })
 
         if (user) {
             res.status(400).json({
                 status: "failed",
-                message: "user already exist"
+                message: "User name already exist. Try different user name"
             })
         } else {
+
             if (name && email && password && confirmPassword) {
                 if (password === confirmPassword) {
 
@@ -40,6 +41,8 @@ export const createUser = async (req, res) => {
                     message: "All filled are required"
                 })
             }
+
+
         }
 
     } catch (error) {
