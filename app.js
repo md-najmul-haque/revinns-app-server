@@ -4,14 +4,11 @@ import userRoute from "./routes/v1/userRoute.js"
 
 const app = express()
 
-
 // middleware
-
 app.use(cors())
 app.use(express.json())
 
-
-app.use('/api/v1', userRoute)
+app.use('/api/v1/user', userRoute)
 
 //root 
 app.get('/', (req, res) => {

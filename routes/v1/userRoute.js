@@ -3,6 +3,6 @@ import express from "express"
 
 const userRoute = express.Router()
 
-userRoute.route('/user').post(createUser)
+userRoute.route('/').post(createUser)
 
 export default userRoute
