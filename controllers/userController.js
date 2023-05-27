@@ -19,6 +19,11 @@ export const createUser = async (req, res) => {
 
                     const user = await createUserServices(data)
 
+                    res.status(200).json({
+                        status: "success",
+                        message: "user created successfully"
+                    })
+
                 } else {
                     res.status(400).json({
                         status: "failed",
