@@ -1,4 +1,5 @@
 import User from "../models/User.js"
+import { createUserService } from "../services/userService.js";
 
 
 export const createUser = async (req, res) => {
@@ -17,7 +18,7 @@ export const createUser = async (req, res) => {
             if (name && email && password && confirmPassword) {
                 if (password === confirmPassword) {
 
-                    const user = await createUserServices(data)
+                    const user = await createUserService(data)
 
                     res.status(200).json({
                         status: "success",
