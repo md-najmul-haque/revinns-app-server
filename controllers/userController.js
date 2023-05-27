@@ -1,5 +1,5 @@
 import User from "../models/User.js"
-import { createUserService } from "../services/userService.js";
+import { createUserService, getUserService } from "../services/userService.js";
 
 
 export const createUser = async (req, res) => {
@@ -43,7 +43,28 @@ export const createUser = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             status: "failed",
-            message: "fail to register user"
+            message: "failed to register user"
         })
     }
+}
+
+export const getUser = async (req, res) => {
+
+    try {
+        const users = await getUserService()
+
+        res.status(200).json({
+            status: "success",
+            message: "user loaded successfully",
+            users: users
+        })
+
+    } catch (error) {
+        res.status(400).json({
+            status: "failed",
+            message: "failed to get user"
+        })
+    }
+
+
 }
