@@ -23,6 +23,6 @@ export const createUserService = async (data) => {
 }
 
 export const getUserService = async () => {
-    const users = await User.find({}).select(-password)
+    const users = await User.find({}).select("-password")
     return users
 }
