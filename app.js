@@ -14,8 +14,8 @@ app.use(express.json())
 //root 
 app.get('/', (req, res) => {
     res.status(200).json({
-        "status": "success",
-        "message": "server is running"
+        status: "success",
+        message: "server is running"
     })
 })
 
