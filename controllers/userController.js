@@ -1,5 +1,5 @@
 import User from "../models/User.js"
-import { createUserService, getUserService } from "../services/userService.js";
+import { createUserService, getUserService, updatePasswordService } from "../services/userService.js";
 import bcrypt from "bcrypt"
 
 
@@ -70,12 +70,14 @@ export const loginUser = async (req, res) => {
 
                 if ((user.name == name) && isMatch) {
 
-                    //Generate JWT token
-                    // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
+                    // Generate JWT token
+                    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
 
                     return res.status(200).json({
                         status: 'success',
                         message: "Login Success",
+                        user: user,
+                        token: token
 
                     })
 
@@ -131,6 +133,55 @@ export const getUser = async (req, res) => {
         res.status(400).json({
             status: "failed",
             message: "failed to get user"
+        })
+    }
+
+
+}
+
+// update password API
+export const updatePassword = async (req, res) => {
+
+    try {
+        const data = req.body
+        const { password, confirmPassword } = data
+        const id = req.params.id
+
+
+        if (password && confirmPassword) {
+
+            if (password === confirmPassword) {
+
+                const result = await updatePasswordService(password, id)
+
+                res.status(200).json({
+                    status: 'success',
+                    message: "Password updated successful",
+
+
+                })
+            } else {
+                return res.status(400).json({
+                    status: 'failed',
+                    message: "Password and confirm password doesn't matched",
+
+                })
+            }
+        }
+
+        else {
+            return res.status(400).json({
+                status: 'failed',
+                message: "Both field are required",
+
+            })
+        }
+
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: "Failed to update user",
+
         })
     }
 

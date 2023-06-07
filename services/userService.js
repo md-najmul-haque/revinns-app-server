@@ -26,3 +26,27 @@ export const getUserService = async () => {
     const users = await User.find({}).select("-password")
     return users
 }
+
+
+//change password
+
+export const updatePasswordService = async (password, id) => {
+
+    const salt = await bcrypt.genSalt(12)
+    const hashPassword = await bcrypt.hash(password, salt)
+
+    const result = await User.findOneAndUpdate(
+        { _id: id },
+        {
+            $set: {
+                password: hashPassword,
+            }
+
+        },
+        { upsert: true }
+    )
+
+    return result
+
+}
+
